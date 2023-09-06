@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 @Controller
@@ -34,13 +35,13 @@ public class RoutesController {
     @GetMapping("/albums")
     public String renderAlbumPage(Model viewModel){
 
-        ArrayList<Album> listOfAlbum=new ArrayList<>();
-        listOfAlbum.add(new Album("title1","artist1",1,100,"image1"));
-        listOfAlbum.add(new Album("title2","artist2",2,200,"image2"));
-        listOfAlbum.add(new Album("title3","artist3",3,300,"image3"));
+        List<Album> listOfAlbum=new ArrayList<>();
+        listOfAlbum.add(new Album("title1","artist1",1,100,"https://th.bing.com/th/id/OIP.JCqScGgwobf4_IhCRTMXHwHaHa?w=178&h=178&c=7&r=0&o=5&pid=1.7"));
+        listOfAlbum.add(new Album("title2","artist2",2,200,"https://th.bing.com/th/id/OIP.6GoJktj1SgdAPC2pGTGxhgHaJe?w=178&h=228&c=7&r=0&o=5&pid=1.7"));
+        listOfAlbum.add(new Album("title3","artist3",3,300,"https://th.bing.com/th/id/OIP.3E-aoTPxYaedOzYIR02pywHaHb?w=185&h=186&c=7&r=0&o=5&pid=1.7"));
 
 
-        viewModel.addAttribute("albumDetails",listOfAlbum.toString());
+        viewModel.addAttribute("albumDetails",listOfAlbum);
         return "albumPage.html";
     }
 

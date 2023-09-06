@@ -2,9 +2,19 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>capitalized word</title>
+    <title>Albums</title>
 </head>
 <body>
-    <h1 th:text="${albumDetails}"></h1>
+    <h1>Albums</h1>
+<ul>
+    <li th:each="album : ${albumDetails}">
+        <img th:src="${album.imageUrl}" th:alt="${album.title}"/>
+        <h3 th:text="'Title : ' + ${album.title}"> </h3>
+        <p th:text="${ 'Artist Name : ' + album.artist}"> </p>
+        <p th:text="${'song Count: ' + album.songCount}"> </p>
+        <p th:text="${'length In Second: ' + album.lengthInSecond}"> </p>
+    </li>
+</ul>
+
 </body>
 </html>
