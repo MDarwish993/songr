@@ -1,5 +1,6 @@
 package com.mohammadDarwishLabs.songr;
 
+import com.mohammadDarwishLabs.songr.modals.Album;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
