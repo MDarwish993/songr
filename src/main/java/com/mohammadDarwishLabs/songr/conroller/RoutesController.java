@@ -1,14 +1,12 @@
 package com.mohammadDarwishLabs.songr.conroller;
 
+import com.mohammadDarwishLabs.songr.exceptions.AlbumNotFoundException;
 import com.mohammadDarwishLabs.songr.modals.Album;
 import com.mohammadDarwishLabs.songr.repository.AlbumRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.ArrayList;
@@ -27,7 +25,7 @@ public class RoutesController {
     @GetMapping("/")
     public String renderRootPage(Model viewModel){
         viewModel.addAttribute("welcomePage","Welcome Page");
-        return "RootPage.html";
+        return "rootPage.html";
     }
 
     @GetMapping("/capitalize/{myText}")
@@ -35,19 +33,6 @@ public class RoutesController {
         viewModel.addAttribute("capitalizedText",myText.toUpperCase());
         return "capitalizedWord.html";
     }
-
-//    @GetMapping("/albums")
-//    public String renderAlbumPage(Model viewModel){
-//
-//        List<Album> listOfAlbum=new ArrayList<>();
-//        listOfAlbum.add(new Album("title1","artist1",1,100,"https://th.bing.com/th/id/OIP.JCqScGgwobf4_IhCRTMXHwHaHa?w=178&h=178&c=7&r=0&o=5&pid=1.7"));
-//        listOfAlbum.add(new Album("title2","artist2",2,200,"https://th.bing.com/th/id/OIP.6GoJktj1SgdAPC2pGTGxhgHaJe?w=178&h=228&c=7&r=0&o=5&pid=1.7"));
-//        listOfAlbum.add(new Album("title3","artist3",3,300,"https://th.bing.com/th/id/OIP.3E-aoTPxYaedOzYIR02pywHaHb?w=185&h=186&c=7&r=0&o=5&pid=1.7"));
-//
-//
-//        viewModel.addAttribute("albumDetails",listOfAlbum);
-//        return "albumPage.html";
-//    }
 
     @Autowired
     AlbumRepository albumRepository;
@@ -66,6 +51,26 @@ public class RoutesController {
         return "albumPage.html";
     }
 
+    @DeleteMapping("/delete/{albumId}")
+    public RedirectView deleteAlbum(@PathVariable Long albumId){
+        albumRepository.deleteById(albumId);
+
+        return new RedirectView("/albums");
+    }
+
+    @PutMapping("/update/{albumId}")
+    public RedirectView updateAlbum(@PathVariable Long albumId,String title, String artist, int songCount, int lengthInSecond, String imageUrl){
+        Album album=albumRepository
+                .findById(albumId)
+                .orElseThrow(()->new AlbumNotFoundException("could not found Album"));
+        album.setTitle(title);
+        album.setArtist(artist);
+        album.setSongCount(songCount);
+        album.setLengthInSecond(lengthInSecond);
+        album.setImageUrl(imageUrl);
+        albumRepository.save(album);
+        return new RedirectView("/albums");
+    }
 
 
 
