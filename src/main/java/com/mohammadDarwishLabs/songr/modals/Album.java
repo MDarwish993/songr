@@ -1,9 +1,7 @@
 package com.mohammadDarwishLabs.songr.modals;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Album {
@@ -15,17 +13,23 @@ public class Album {
     private int songCount;
     private int lengthInSecond;
     private String imageUrl;
+    @OneToMany(mappedBy = "album",cascade = CascadeType.ALL)
+    private List<Song> songList;
 
     public Album(String title, String artist, int songCount, int lengthInSecond, String imageUrl) {
-        this.title = title;
-        this.artist = artist;
-        this.songCount = songCount;
-        this.lengthInSecond = lengthInSecond;
-        this.imageUrl = imageUrl;
+       setTitle(title);
+        setArtist(artist);
+        setSongCount(songCount);
+        setLengthInSecond(lengthInSecond);
+        setImageUrl(imageUrl);
     }
 
     public Album(){
-
+        this.title = "unkown title";
+        this.artist = "unkown artist";
+        this.songCount = 0;
+        this.lengthInSecond = 0;
+        this.imageUrl = "unkown imageUrl";
     }
     public String getTitle() {
         return title;
@@ -48,7 +52,12 @@ public class Album {
     }
 
     public void setSongCount(int songCount) {
-        this.songCount = songCount;
+        if(Integer.class.isInstance(songCount)){
+            this.songCount = songCount;
+        }else{
+            this.songCount = 0;
+        }
+
     }
 
     public int getLengthInSecond() {
@@ -56,7 +65,12 @@ public class Album {
     }
 
     public void setLengthInSecond(int lengthInSecond) {
-        this.lengthInSecond = lengthInSecond;
+        if(Integer.class.isInstance(lengthInSecond)){
+            this.lengthInSecond = lengthInSecond;
+        }else{
+            this.lengthInSecond = 0;
+        }
+
     }
 
     public String getImageUrl() {
@@ -65,6 +79,22 @@ public class Album {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public List<Song> getSongList() {
+        return songList;
+    }
+
+    public void setSongList(List<Song> songList) {
+        this.songList = songList;
     }
 
     @Override
