@@ -28,7 +28,7 @@ public class SongController {
 
         Song song=new Song(title,length,trackNumber,album);
             songRepository.save(song);
-        return new RedirectView("/");
+        return new RedirectView("/albums");
     }
 
     @GetMapping("/songs")
@@ -36,32 +36,32 @@ public class SongController {
         List<Song> listOfSong=songRepository.findAll();
 
         viewModel.addAttribute("listOfSong",listOfSong);
-        return "/";
+        return "/songs.html";
     }
 
-    @DeleteMapping("/delete/{songId}")
-    public RedirectView deleteSong(@PathVariable Long songId){
-        songRepository.deleteById(songId);
-
-        return new RedirectView("/");
-    }
-
-
-    @PutMapping("/update/{songId}")
-    public RedirectView updateSong(@PathVariable Long songId,String title, int length, int trackNumber, Long albumId){
-        Song song=songRepository
-                .findById(songId)
-                .orElseThrow(() -> new RuntimeException());
-        song.setTitle(title);
-        song.setLength(length);
-        song.setTrackNumber(trackNumber);
-        Album album=albumRepository
-                .findById(albumId)
-                .orElseThrow(()->new AlbumNotFoundException("could not find Album"));
-        song.setAlbum(album);
-        songRepository.save(song);
-        return new RedirectView("/");
-    }
+//    @DeleteMapping("/delete/{songId}")
+//    public RedirectView deleteSong(@PathVariable Long songId){
+//        songRepository.deleteById(songId);
+//
+//        return new RedirectView("/");
+//    }
+//
+//
+//    @PutMapping("/update/{songId}")
+//    public RedirectView updateSong(@PathVariable Long songId,String title, int length, int trackNumber, Long albumId){
+//        Song song=songRepository
+//                .findById(songId)
+//                .orElseThrow(() -> new RuntimeException());
+//        song.setTitle(title);
+//        song.setLength(length);
+//        song.setTrackNumber(trackNumber);
+//        Album album=albumRepository
+//                .findById(albumId)
+//                .orElseThrow(()->new AlbumNotFoundException("could not find Album"));
+//        song.setAlbum(album);
+//        songRepository.save(song);
+//        return new RedirectView("/");
+//    }
 
 
 
