@@ -52,11 +52,8 @@ public class Album {
     }
 
     public void setSongCount(int songCount) {
-        if(Integer.class.isInstance(songCount)){
+
             this.songCount = songCount;
-        }else{
-            this.songCount = 0;
-        }
 
     }
 
@@ -65,11 +62,9 @@ public class Album {
     }
 
     public void setLengthInSecond(int lengthInSecond) {
-        if(Integer.class.isInstance(lengthInSecond)){
+
             this.lengthInSecond = lengthInSecond;
-        }else{
-            this.lengthInSecond = 0;
-        }
+
 
     }
 
